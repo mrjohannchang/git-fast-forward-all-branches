@@ -1,0 +1,24 @@
+#!/bin/sh
+
+curref=$(git symbolic-ref HEAD 2>&-)
+
+git config --local --get-regex '^branch.*remote$' | while read -r line; do
+  branch=$(echo "$line" | awk '{print $1}' | cut -c 8- | rev | cut -c 8- | rev)
+  remote=$(echo "$line" | awk '{print $2}')
+  upstream=$(git config --local --get "branch.$branch.merge" | cut -c 12-)
+
+  echo "$branch"
+
+  if [ -n "$(git log --oneline -1 "$branch..$remote/$upstream")" ]; then
+    if [ -z "$(git log --oneline -1 "$remote/$upstream..$branch")" ]; then
+      if [ "refs/heads/$branch" = "$curref" ]; then
+        git reset --hard "$remote/$upstream" 1>&- 2>&-
+      else
+        git update-ref "refs/heads/$branch" "$remote/$upstream" 1>&- 2>&-
+      fi
+      echo "  fast-forwarded"
+    else
+      echo "  skipped (diverged)"
+    fi
+  fi
+done
