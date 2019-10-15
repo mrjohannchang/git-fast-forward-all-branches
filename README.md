@@ -17,11 +17,17 @@ dev
   fast-forwarded
 hotfix
   skipped (diverged)
+pull-request-1
+  skipped (upstream is deleted)
 ```
 
 ## Installation
 
 Copy `git-fast-forward-all` to your `$PATH` (such as `~/bin`).
+
+## Alternatives
+
+1. [hub](https://github.com/github/hub). (hub doesn't support multiple remotes yet.)
 
 ## License
 
