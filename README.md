@@ -6,7 +6,6 @@ Inspired by [Can “git pull --all” update all my local branches?](https://sta
 ## Usage
 
 ```
-git fetch --all  # Optional
 git fast-forward-all
 ```
 
