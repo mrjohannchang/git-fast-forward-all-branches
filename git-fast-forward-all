@@ -14,8 +14,8 @@ fast_forward_all() {
   ret=0
 
   while read -r line; do
-    branch=$(echo "$line" | awk '{print $1}' | cut -c 8- | rev | cut -c 8- | rev)
-    remote=$(echo "$line" | awk '{print $2}')
+    branch=$(echo "$line" | cut -c 8- | rev | cut -c 8- | rev)
+    remote=$(git config --local --get "branch.$branch.remote")
     upstream=$(git config --local --get "branch.$branch.merge" | cut -c 12-)
 
     if ! git rev-parse --verify --quiet "$remote/$upstream" 1>&- 2>&-; then
@@ -43,7 +43,7 @@ fast_forward_all() {
       git update-ref "refs/heads/$branch" "$remote/$upstream" 1>&- 2>&-
     fi
     echo "  fast-forwarded"
-  done < <(git config --local --get-regex '^branch.*remote$')
+  done < <(git config --local --name-only --get-regex '^branch.*remote$')
 
   return "$ret"
 }
