@@ -21,7 +21,7 @@ fast_forward_all() {
     if ! git rev-parse --verify --quiet "$remote/$upstream" 1>&- 2>&-; then
       ret=1
       echo "Branch $branch"
-      echo "  skipped: upstream is deleted"
+      echo "  skipped: upstream is absent"
       continue
     fi
 
