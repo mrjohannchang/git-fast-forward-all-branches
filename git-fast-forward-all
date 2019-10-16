@@ -21,7 +21,7 @@ fast_forward_all() {
     if ! git rev-parse --verify --quiet "$remote/$upstream" 1>&- 2>&-; then
       ret=1
       echo "Branch $branch"
-      echo "  skipped (upstream is deleted)"
+      echo "  skipped: upstream is deleted"
       continue
     fi
 
@@ -32,7 +32,7 @@ fast_forward_all() {
     echo "Branch $branch"
 
     if [ -n "$(git log --oneline -1 "$remote/$upstream..$branch")" ]; then
-      echo "  skipped (diverged)"
+      echo "  skipped: diverged"
       ret=1
       continue
     fi
@@ -47,6 +47,11 @@ fast_forward_all() {
 
   return "$ret"
 }
+
+if output=$(git status --porcelain) && [ -n "$output" ]; then
+  echo "Skipped: repo is not clean"
+  exit 1
+fi
 
 fetch_all
 excode=$?
