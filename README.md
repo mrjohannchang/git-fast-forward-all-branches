@@ -16,9 +16,9 @@ master
 dev
   fast-forwarded
 hotfix
-  skipped (diverged)
+  skipped: diverged
 pull-request-1
-  skipped (upstream is deleted)
+  skipped: upstream is deleted
 ```
 
 ## Installation
