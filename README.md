@@ -18,7 +18,7 @@ dev
 hotfix
   skipped: diverged
 pull-request-1
-  skipped: upstream is deleted
+  skipped: upstream is absent
 ```
 
 ## Installation
