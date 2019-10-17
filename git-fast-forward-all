@@ -1,5 +1,9 @@
 #!/bin/bash
 
+EPERM=1
+ENOENT=2
+EEXIST=17
+
 curref=$(git symbolic-ref HEAD 2>&-)
 
 fetch_all() {
@@ -19,7 +23,7 @@ fast_forward_all() {
     upstream=$(git config --local --get "branch.$branch.merge" | cut -c 12-)
 
     if ! git rev-parse --verify --quiet "$remote/$upstream" 1>&- 2>&-; then
-      ret=1
+      ret=$(( $ret | $ENOENT ))
       echo "Branch $branch"
       echo "  skipped: upstream is absent"
       continue
@@ -33,7 +37,7 @@ fast_forward_all() {
 
     if [ -n "$(git log --oneline -1 "$remote/$upstream..$branch")" ]; then
       echo "  skipped: diverged"
-      ret=1
+      ret=$(( $ret | $EPERM ))
       continue
     fi
 
@@ -50,7 +54,8 @@ fast_forward_all() {
 
 if output=$(git status --porcelain) && [ -n "$output" ]; then
   echo "Skipped: repo is not clean"
-  exit 1
+  exit $EEXIST
+
 fi
 
 fetch_all
