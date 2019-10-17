@@ -12,11 +12,11 @@ git fast-forward-all
 Example output:
 
 ```
-master
+Branch master
   fast-forwarded
-hotfix
+Branch hotfix
   skipped: diverged
-pull-request-1
+Branch pull-request-1
   skipped: upstream is absent
 ```
 
