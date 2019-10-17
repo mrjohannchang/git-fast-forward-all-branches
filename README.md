@@ -13,7 +13,6 @@ Example output:
 
 ```
 master
-dev
   fast-forwarded
 hotfix
   skipped: diverged
