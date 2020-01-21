@@ -42,7 +42,7 @@ fast_forward_all() {
     fi
 
     if [ "refs/heads/$branch" = "$curref" ]; then
-      git reset --hard "$remote/$upstream" 1>&- 2>&-
+      git merge --ff-only "$remote/$upstream" 1>&- 2>&-
     else
       git update-ref "refs/heads/$branch" "$remote/$upstream" 1>&- 2>&-
     fi
