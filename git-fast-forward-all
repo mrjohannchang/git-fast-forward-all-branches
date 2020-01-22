@@ -55,7 +55,6 @@ fast_forward_all() {
 if output=$(git status --porcelain) && [ -n "$output" ]; then
   echo "Skipped: repo is not clean"
   exit $EEXIST
-
 fi
 
 fetch_all
