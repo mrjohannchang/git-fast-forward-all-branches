@@ -52,16 +52,16 @@ fast_forward_all() {
   return "$ret"
 }
 
-if output=$(git status --porcelain) && [ -n "$output" ]; then
-  echo "Skipped: repo is not clean"
-  exit $EEXIST
-fi
-
 fetch_all
 excode=$?
 [ "$excode" -eq 0 ] || {
   exit "$excode"
 }
+
+if output=$(git status --porcelain) && [ -n "$output" ]; then
+  echo "Skipped: repo is not clean"
+  exit $EEXIST
+fi
 
 fast_forward_all
 excode=$?
